@@ -3,10 +3,10 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --live-reload=false",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "ngrok": "ngrok http --domain=  4200 --host-header=\"localhost:4200\" --basic-auth \"\""
   },
   "private": true,
   "dependencies": {
@@ -20,6 +20,7 @@
     "@angular/router": "^15.2.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
+    "util": "^0.12.5",
     "zone.js": "~0.12.0"
   },
   "devDependencies": {
@@ -27,6 +28,8 @@
     "@angular/cli": "~15.2.6",
     "@angular/compiler-cli": "^15.2.0",
     "@types/jasmine": "~4.3.0",
+    "@types/node": "^20.12.12",
+    "dotenv": "^16.4.5",
     "jasmine-core": "~4.5.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.1.0",

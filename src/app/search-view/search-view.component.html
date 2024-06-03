@@ -1,0 +1,46 @@
+<div class="search-view">
+    <div>
+        <input 
+        [(ngModel)]="certNumber"
+        type="text"
+        (keyup.enter)="searchClick()">
+        <button (click)="searchClick()">Search</button>
+    </div>
+    <div class="search-history-container">
+        Search history:
+        <span *ngFor="let cert of certHistory" (click)="searchClick(cert.CertNumber)">{{cert.Text}} #{{cert.CertNumber}}</span>
+    </div>
+</div>
+<app-spinner *ngIf="loading"></app-spinner>
+<div class="result-view">
+ <!-- {{result | json}} -->
+    <h2 *ngIf="result">
+        PSA {{result.CardGrade}} {{result.Subject}} #{{result.CardNumber}} {{result.Brand}} 
+        - {{result.Year}}
+        
+    </h2>
+ 
+    <div class="image-container">
+        <img *ngFor="let img of images" [src]="img.ImageURL" 
+        [title]="img.IsFrontImage ? 'PSA slab front image' : 'PSA slab back image'"
+        [alt]="img.ImageURL"
+        >
+        <div *ngIf="images.length === 0">
+        No images found...
+        </div>
+    </div>
+</div>
+
+<div class="copy-container">
+    <div *ngIf="copyText" class="copy-view">
+        Text:
+        <textarea [(ngModel)]="copyTextValue" name="copy text" id="copyTextId" cols="30" rows="10"></textarea>
+        <button (click)="copyText(copyTextValue)">Copy</button>
+        
+    </div>
+    <div *ngIf="copyText" class="copy-view">
+        Images:
+        <textarea [(ngModel)]="copyTextValue2" placeholder="No image data" name="copy text" id="copyTextId2" cols="30" rows="10"></textarea>
+        <button (click)="copyText(copyTextValue2)">Copy</button>
+    </div>
+</div>

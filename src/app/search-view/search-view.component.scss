@@ -1,0 +1,83 @@
+:host {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    flex-direction: column;
+}
+.search-view {
+    margin-top: 1rem;
+    display: flex;
+    width: 100%;
+    flex-grow: 1;
+    justify-content: center;
+    
+    &>div:first-child>* {
+        height: 35px;
+        box-sizing: border-box;
+    }
+}
+
+.search-history-container{
+    min-width: 150px;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    right: .5rem;
+    align-items: flex-end;
+    font-weight: bold;
+
+    & span {
+        cursor: pointer;
+        text-decoration: underline;
+    }
+}
+
+.result-view {
+    display: flex;
+    margin: 1rem 0;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    .image-container {
+        padding: 2rem;
+        display: flex;
+        justify-content: space-evenly;
+        min-height: 0;
+        min-width: 0;
+        width: 80%;
+        img {
+            margin: 0 5px;
+            max-height: 500px;
+            max-width: 50%;
+        }
+    }
+}
+.copy-container {
+    display: flex;
+    gap: 1rem;
+    width: 70%;
+
+    .copy-view {
+        position: relative;
+        margin: 1rem 0;
+        display: flex;
+        flex-direction: column;
+        width: 50%;
+        flex-grow: 1;
+        justify-content: center;
+        font-weight: bold;
+
+        textarea {
+            width: 100%;
+            position: relative;
+            border: none;
+            outline: none;
+            resize: none;
+        }
+        button {
+            position: absolute;
+            bottom: .125rem;
+            right: .125rem;
+        }
+    }
+}
