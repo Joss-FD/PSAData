@@ -35,19 +35,22 @@
         position: absolute;
         left: -20px;
 
-        transition: rotate .25s;
-    }
-    &.hide {
-        // margin-right: ;
-        #collapseIcon {
-            rotate: 180deg;
-        }
+        transition: rotate .4s;
     }
 
-    &>span>svg {
-        cursor: pointer;
-        height: 15px;
-        width: 15px;
+    //When the menu is hidden
+    &.hide {
+        min-width: unset;
+        #collapseIcon {
+            display: block;
+            rotate: 180deg;
+        }
+        & a {
+            display: none;
+        }
+        &>span.search-history-title {
+            display: none;
+        }
     }
 
     &>span.search-history-title {
@@ -56,6 +59,12 @@
         height: 20px;
         align-items: center;
         gap: .25rem;
+
+        &>svg {
+            cursor: pointer;
+            height: 15px;
+            width: 15px;
+        }
     }
 
     & a {
