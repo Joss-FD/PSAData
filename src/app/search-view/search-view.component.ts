@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { PsaRequestService } from '../psa-request.service';
 import { PSACert, PSADetailsResponse, PSAImages } from '../types/psa.type';
-import { CERT_HISTORY_LENGTH, DEFAULT_PSA_IMAGES, DEFAULT_PSA_RESULT } from '../constants/constants';
+import { CERT_HISTORY_LENGTH, DEFAULT_PSA_IMAGES, DEFAULT_PSA_RESULT, SEARCH_HISTORY_KEY } from '../constants/constants';
 import { FakeLink } from '../types/fake-link.type';
+import { LocalStorageService } from '../local-storage/local-storage.service';
 
 @Component({
   selector: 'app-search-view',
@@ -11,10 +12,11 @@ import { FakeLink } from '../types/fake-link.type';
 })
 export class SearchViewComponent {
 
-  constructor(private requestService: PsaRequestService) {
+  constructor(private requestService: PsaRequestService, private localStorageService: LocalStorageService) {
     this.result = JSON.parse(DEFAULT_PSA_RESULT).PSACert;
     this.images = DEFAULT_PSA_IMAGES.sort((a, b) => a.IsFrontImage === b.IsFrontImage ? 0 : a.IsFrontImage ? -1 : 1);;
     this.getStringFromPayload(this.result, this.images)
+    this.certHistory = localStorageService.getObjectData(SEARCH_HISTORY_KEY);
   }
 
   certNumber: string = "";
@@ -50,13 +52,20 @@ export class SearchViewComponent {
         this.result = details.PSACert;
         //Put the front image first
         this.images = images.sort((a, b) => a.IsFrontImage === b.IsFrontImage ? 0 : a.IsFrontImage ? -1 : 1);
+        
+        if (!this.result) {
+          this.loading = false;
+          return;
+        }
+        
         this.getStringFromPayload(this.result, this.images);
         this.cursedCache[certNumber!] = [this.result, this.images];
-
+        
         if(addToHistory)
         {
           this.certHistory.unshift(new FakeLink(certNumber!, this.result.Subject));
-          this.certHistory.slice(0, CERT_HISTORY_LENGTH - 1)
+          this.certHistory.slice(0, CERT_HISTORY_LENGTH - 1);
+          this.localStorageService.saveObjectData(SEARCH_HISTORY_KEY, this.certHistory)
         }
         this.loading = false;
       },
@@ -69,16 +78,43 @@ export class SearchViewComponent {
 
 
   getStringFromPayload(result: PSACert, images: PSAImages[], rearangeGrade: boolean = true) {
-    if (rearangeGrade) {
+    // The Grade string displays the number last instead of first
+    if (rearangeGrade && result.CardGrade) {
       let tempArr = result.CardGrade.split(" ");
-      result.CardGrade = `${tempArr[2]??tempArr[1]} ${tempArr[0]}${(tempArr[2] ? ' '+tempArr[1] : '')}`;
+      tempArr.unshift(tempArr.pop() ?? '');
+      result.CardGrade = `${tempArr.join(" ")}`;
       this.result.CardGrade = result.CardGrade;
     }
-    this.copyTextValue = `PSA ${result.CardGrade} ${result.Subject} #${result.CardNumber} ${result.Brand} ${result.Year}`;
+    this.copyTextValue = `PSA ${result.CardGrade} ${result.Subject} #${result.CardNumber} ${result.Variety} ${result.Year}`;
     this.copyTextValue2 = images.map(img => img.ImageURL).join(";");
   }
 
   copyText(text: string) {
     navigator.clipboard.writeText(text);
+  }
+
+  clearHistory() {
+    this.certHistory = [];
+    this.localStorageService.removeData(SEARCH_HISTORY_KEY);
+  }
+
+  removeHistoryEntry(index: number) {
+    this.certHistory.splice(index, 1);
+    this.localStorageService.saveObjectData(SEARCH_HISTORY_KEY, this.certHistory);
+  }
+
+  //consider using animations
+  toggleMenu(element: HTMLElement) {
+    console.log(element);
+    
+    if (element.classList.contains("hide")) {
+      element.classList.remove("hide");
+      element.style.marginRight = "unset";
+    }
+    else {
+      element.classList.add("hide");
+      // +0.5rem to acocunt for the right: 0.5rem (used as padding)
+      element.style.marginRight = `calc(-${element.offsetWidth}px - 0.5rem)`;
+    }
   }
 }

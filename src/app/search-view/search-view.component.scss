@@ -17,7 +17,7 @@
     }
 }
 
-.search-history-container{
+.search-history-container {
     min-width: 150px;
     display: flex;
     flex-direction: column;
@@ -26,9 +26,52 @@
     align-items: flex-end;
     font-weight: bold;
 
-    & span {
+    transition: margin-right .25s;
+
+    #collapseIcon {
         cursor: pointer;
+        width: 20px;
+        height: 20px;
+        position: absolute;
+        left: -20px;
+
+        transition: rotate .25s;
+    }
+    &.hide {
+        // margin-right: ;
+        #collapseIcon {
+            rotate: 180deg;
+        }
+    }
+
+    &>span>svg {
+        cursor: pointer;
+        height: 15px;
+        width: 15px;
+    }
+
+    &>span.search-history-title {
+        display: flex;
         text-decoration: underline;
+        height: 20px;
+        align-items: center;
+        gap: .25rem;
+    }
+
+    & a {
+        display: flex;
+        cursor: pointer;
+        // text-decoration: underline;
+        height: 20px;
+        align-items: center;
+        gap: .25rem;
+        font-size: 12px;
+
+        &>svg {
+            cursor: pointer;
+            height: 15px;
+            width: 15px;
+        }
     }
 }
 

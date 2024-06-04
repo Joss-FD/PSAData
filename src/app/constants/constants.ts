@@ -1,4 +1,4 @@
-export const CERT_HISTORY_LENGTH = 20;
+export const CERT_HISTORY_LENGTH = 10;
 
 export const DEFAULT_PSA_RESULT = `{
   "PSACert": {
@@ -21,7 +21,7 @@ export const DEFAULT_PSA_RESULT = `{
     "TotalPopulationWithQualifier": 0,
     "PopulationHigher": 0
   }
-}`
+}`;
 
 export const DEFAULT_PSA_IMAGES = [
   {
@@ -32,4 +32,6 @@ export const DEFAULT_PSA_IMAGES = [
       "IsFrontImage": true,
       "ImageURL": "https://d1htnxwo4o0jhw.cloudfront.net/cert/145847376/GWSYwdnRnUSRNt12XyOBxg.jpg"
   }
-]
+];
+
+export const SEARCH_HISTORY_KEY = "searchHistory";
