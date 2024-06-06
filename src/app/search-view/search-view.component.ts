@@ -16,7 +16,7 @@ export class SearchViewComponent {
     this.result = JSON.parse(DEFAULT_PSA_RESULT).PSACert;
     this.images = DEFAULT_PSA_IMAGES.sort((a, b) => a.IsFrontImage === b.IsFrontImage ? 0 : a.IsFrontImage ? -1 : 1);;
     this.getStringFromPayload(this.result, this.images)
-    this.certHistory = localStorageService.getObjectData(SEARCH_HISTORY_KEY);
+    this.certHistory = localStorageService.getObjectData(SEARCH_HISTORY_KEY) ?? [];
   }
 
   certNumber: string = "";
@@ -64,8 +64,8 @@ export class SearchViewComponent {
         if(addToHistory)
         {
           this.certHistory.unshift(new FakeLink(certNumber!, this.result.Subject));
-          this.certHistory.slice(0, CERT_HISTORY_LENGTH - 1);
-          this.localStorageService.saveObjectData(SEARCH_HISTORY_KEY, this.certHistory)
+          this.certHistory = this.certHistory.slice(0, CERT_HISTORY_LENGTH - 1);
+          this.localStorageService.saveObjectData(SEARCH_HISTORY_KEY, this.certHistory);
         }
         this.loading = false;
       },
@@ -105,8 +105,6 @@ export class SearchViewComponent {
 
   //consider using animations
   toggleMenu(element: HTMLElement) {
-    console.log(element);
-    
     if (element.classList.contains("hide")) {
       element.classList.remove("hide");
       element.style.marginRight = "unset";

@@ -22,7 +22,8 @@ export class LocalStorageService {
   }
 
   public getObjectData(key: string): any {
-    return JSON.parse(localStorage.getItem(key) ?? '')
+    let data = localStorage.getItem(key);
+    return data ? JSON.parse(data) : data;
   }
 
   public removeData(key: string) {
