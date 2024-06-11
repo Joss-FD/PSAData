@@ -11,9 +11,13 @@
     flex-grow: 1;
     justify-content: center;
     
-    &>div:first-child>* {
+    .search-input-container:first-child>* {
         height: 35px;
         box-sizing: border-box;
+    }
+    .search-input-container {
+        display: flex;
+        gap: .25rem;
     }
 }
 

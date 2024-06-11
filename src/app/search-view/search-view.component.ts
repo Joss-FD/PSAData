@@ -14,8 +14,8 @@ export class SearchViewComponent {
 
   constructor(private requestService: PsaRequestService, private localStorageService: LocalStorageService) {
     this.result = JSON.parse(DEFAULT_PSA_RESULT).PSACert;
-    this.images = DEFAULT_PSA_IMAGES.sort((a, b) => a.IsFrontImage === b.IsFrontImage ? 0 : a.IsFrontImage ? -1 : 1);;
-    this.getStringFromPayload(this.result, this.images)
+    this.images = DEFAULT_PSA_IMAGES.sort((a, b) => a.IsFrontImage === b.IsFrontImage ? 0 : a.IsFrontImage ? -1 : 1);
+    this.getStringFromPayload(this.result, this.images);
     this.certHistory = localStorageService.getObjectData(SEARCH_HISTORY_KEY) ?? [];
   }
 
@@ -28,22 +28,24 @@ export class SearchViewComponent {
   copyTextValue: string = "";
   copyTextValue2: string = "";
 
-  certHistory: FakeLink[] = []
+  certHistory: FakeLink[] = [];
 
   loading: boolean = false;
   searchClick(certNumber?: string) {
-    this.loading = true;
+    
     let addToHistory: boolean = !certNumber;
 
     //Certnumber provided, we update the binded certNumber to update the input value 
     if (certNumber) this.certNumber = certNumber;
     //No certNumber provided, we fallback to the binded certNumber in the input field
-    certNumber = certNumber ?? this.certNumber
+    certNumber = certNumber ?? this.certNumber;
     
+    if(!certNumber) return;
+    this.loading = true;
     if(this.cursedCache[certNumber]) {
       this.result = this.cursedCache[certNumber][0];
       this.images = this.cursedCache[certNumber][1];
-      this.getStringFromPayload(this.result, this.images, false)
+      this.getStringFromPayload(this.result, this.images, false);
       this.loading = false;
     }
     else {
@@ -71,7 +73,7 @@ export class SearchViewComponent {
       },
       error => {
         this.loading = false;
-        console.trace(error)
+        console.trace(error);
       })
     }
   }
