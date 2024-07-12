@@ -96,8 +96,10 @@ export class SearchViewComponent {
   }
 
   clearHistory() {
-    this.certHistory = [];
-    this.localStorageService.removeData(SEARCH_HISTORY_KEY);
+    if (confirm("Clear search history?")) {
+      this.certHistory = [];
+      this.localStorageService.removeData(SEARCH_HISTORY_KEY);
+    }
   }
 
   removeHistoryEntry(index: number) {

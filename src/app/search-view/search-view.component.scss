@@ -111,7 +111,7 @@
 .copy-container {
     display: flex;
     gap: 1rem;
-    width: 70%;
+    width: 80%;
 
     .copy-view {
         position: relative;
@@ -129,6 +129,7 @@
             border: none;
             outline: none;
             resize: none;
+            box-sizing: border-box;
         }
         button {
             position: absolute;
