@@ -25,8 +25,9 @@ export class SearchViewComponent {
 
   cursedCache: any = {};
 
-  copyTextValue: string = "";
-  copyTextValue2: string = "";
+  cardTitleText: string = "";
+  imageLinkText: string = "";
+  image2LinkText: string = "";
 
   certHistory: FakeLink[] = [];
 
@@ -87,8 +88,8 @@ export class SearchViewComponent {
       result.CardGrade = `${tempArr.join(" ")}`;
       this.result.CardGrade = result.CardGrade;
     }
-    this.copyTextValue = `PSA ${result.CardGrade} ${result.Subject} #${result.CardNumber} ${result.Variety} ${result.Year}`;
-    this.copyTextValue2 = images.map(img => img.ImageURL).join(";");
+    this.cardTitleText = `PSA ${result.CardGrade} ${result.Subject} #${result.CardNumber} ${result.Variety} ${result.Year}`.replace(/  +/g, ' ');
+    [this.imageLinkText, this.image2LinkText ] = images.map(img => img.ImageURL)
   }
 
   copyText(text: string) {
@@ -115,8 +116,8 @@ export class SearchViewComponent {
     }
     else {
       element.classList.add("hide");
-      // +0.5rem to acocunt for the right: 0.5rem (used as padding)
-      element.style.marginRight = `calc(-${element.offsetWidth}px - 0.5rem)`;
-    }
+      // +0.5rem to account for the right: 0.5rem (used as padding)
+      // element.style.marginRight = `calc(-${element.offsetWidth}px - 0.5rem)`;
+    } 
   }
 }
