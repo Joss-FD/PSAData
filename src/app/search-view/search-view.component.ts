@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { PsaRequestService } from '../psa-request.service';
 import { PSACert, PSADetailsResponse, PSAImages } from '../types/psa.type';
 import { CERT_HISTORY_LENGTH, DEFAULT_PSA_IMAGES, DEFAULT_PSA_RESULT, SEARCH_HISTORY_KEY } from '../constants/constants';
@@ -12,6 +12,7 @@ import { ToastService } from '../toast/toast.service';
   styleUrls: ['./search-view.component.scss']
 })
 export class SearchViewComponent {
+  @ViewChild('m') menuElement!: ElementRef<HTMLDivElement>;
 
   constructor(private requestService: PsaRequestService, private localStorageService: LocalStorageService, private toastService: ToastService) {
     this.result = JSON.parse(DEFAULT_PSA_RESULT).PSACert;
@@ -19,7 +20,13 @@ export class SearchViewComponent {
     this.getStringFromPayload(this.result, this.images);
     this.certHistory = localStorageService.getObjectData(SEARCH_HISTORY_KEY) ?? [];
   }
-
+  ngAfterViewInit() {
+    // If there is no history, make sure menu is hidden
+    if (this.certHistory.length === 0) {
+      this.menuElement.nativeElement.classList.add('hide');
+    }
+  }
+  
   certNumber: string = "";
   result: PSACert;
   images: PSAImages[] = [];
