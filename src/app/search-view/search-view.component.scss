@@ -4,6 +4,9 @@
     align-items: center;
     flex-direction: column;
 }
+* {
+    font-family: inherit;
+}
 .search-view {
     margin-top: 1rem;
     display: flex;
@@ -14,9 +17,10 @@
     .search-input-container:first-child>* {
         height: 35px;
         box-sizing: border-box;
-        background-color: color-mix(in oklab, oklch(100% 0 0 / .15) 30%, transparent);
+        // background-color: color-mix(in oklab, oklch(100% 0 0 / .15) 30%, transparent);
+        background: hsl(241, 10%, 4% / 1);
         color: white;
-        border: 1px solid rgb(117, 117, 117);
+        border: 1px solid #27272a;
         border-radius: .25rem;
         &::placeholder {
             color: rgb(187, 187, 187)
@@ -26,7 +30,7 @@
         display: flex;
         gap: .25rem;
         &>input {
-        padding: 0 1rem;
+        padding: 0 .5rem;
     }
     }
     button {
@@ -40,7 +44,7 @@
 }
 
 .search-history-container {
-    border: 1px solid rgb(117, 117, 117);
+    border: 1px solid #27272a;
     border-radius: .25rem;
     background-color: color-mix(in oklab, oklch(100% 0 0 / .15) 30%, transparent);
     min-width: 150px;
@@ -50,7 +54,7 @@
     right: .5rem;
     align-items: flex-end;
     font-weight: bold;
-    padding: .25rem;
+    padding: .5rem;
     transition: margin-right .25s;
     transition: transform .5s;
 
@@ -80,14 +84,14 @@
             display: block;
             rotate: 180deg;
         }
-        & a {
-            // width: 0px;
-            // display: none;
-        }
-        &>span.search-history-title {
-            // width: 0px;
-            // display: none;
-        }
+        // & a {
+        //     // width: 0px;
+        //     // display: none;
+        // }
+        // &>span.search-history-title {
+        //     // width: 0px;
+        //     // display: none;
+        // }
     }
 
     &>span.search-history-title {
@@ -162,10 +166,11 @@
         font-weight: bold;
 
         textarea {
+            font-size: 9pt;
             padding: .5rem;
             width: 100%;
             position: relative;
-            border: 1px solid rgb(117, 117, 117);
+            border: 1px solid #27272a;
             border-radius: .25rem;
             outline: none;
             resize: none;
