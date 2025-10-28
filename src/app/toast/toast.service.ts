@@ -17,7 +17,7 @@ export class ToastService {
 
   toastState$ = this.toastSubject.asObservable();
 
-  showError(message: string, duration: number = 5000) {
+  showError(message: string, duration: number = 20000) {
     const id = this.counter++;
     const toast: Toast = { id, message, type: 'error' };
     this.toasts.push(toast);

@@ -34,7 +34,7 @@ export class SearchViewComponent {
 
   loading: boolean = false;
   searchClick(certNumber?: string) {
-    
+
     let addToHistory: boolean = !certNumber;
 
     //Certnumber provided, we update the binded certNumber to update the input value 
@@ -76,7 +76,7 @@ export class SearchViewComponent {
       error => {
         this.loading = false;
         console.trace(error);
-        this.toastService.showError("API request failed: " + (error.message || error.statusText || "Unknown error"));
+        this.toastService.showError("API request failed: " + (error.error || error.status || "Unknown error"));
       })
     }
   }
