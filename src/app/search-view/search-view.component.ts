@@ -4,6 +4,7 @@ import { PSACert, PSADetailsResponse, PSAImages } from '../types/psa.type';
 import { CERT_HISTORY_LENGTH, DEFAULT_PSA_IMAGES, DEFAULT_PSA_RESULT, SEARCH_HISTORY_KEY } from '../constants/constants';
 import { FakeLink } from '../types/fake-link.type';
 import { LocalStorageService } from '../local-storage/local-storage.service';
+import { ToastService } from '../toast/toast.service';
 
 @Component({
   selector: 'app-search-view',
@@ -12,7 +13,7 @@ import { LocalStorageService } from '../local-storage/local-storage.service';
 })
 export class SearchViewComponent {
 
-  constructor(private requestService: PsaRequestService, private localStorageService: LocalStorageService) {
+  constructor(private requestService: PsaRequestService, private localStorageService: LocalStorageService, private toastService: ToastService) {
     this.result = JSON.parse(DEFAULT_PSA_RESULT).PSACert;
     this.images = DEFAULT_PSA_IMAGES.sort((a, b) => a.IsFrontImage === b.IsFrontImage ? 0 : a.IsFrontImage ? -1 : 1);
     this.getStringFromPayload(this.result, this.images);
@@ -75,6 +76,7 @@ export class SearchViewComponent {
       error => {
         this.loading = false;
         console.trace(error);
+        this.toastService.showError("API request failed: " + (error.message || error.statusText || "Unknown error"));
       })
     }
   }
