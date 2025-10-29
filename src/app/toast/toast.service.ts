@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
+
+export type ToastType = 'error' | 'success';
 
 export interface Toast {
   id: number;
   message: string;
-  type: 'error';
+  type: ToastType;
 }
 
 @Injectable({
@@ -12,18 +14,18 @@ export interface Toast {
 })
 export class ToastService {
   private toasts: Toast[] = [];
-  private toastSubject = new Subject<Toast[]>();
-  private counter = 0;
-
+  private toastSubject = new BehaviorSubject<Toast[]>([]);
   toastState$ = this.toastSubject.asObservable();
 
-  showError(message: string, duration: number = 20000) {
-    const id = this.counter++;
-    const toast: Toast = { id, message, type: 'error' };
+  private idCounter = 0;
+
+  showToast(message: string, type: ToastType = 'error') {
+    const id = this.idCounter++;
+    const toast: Toast = { id, message, type };
     this.toasts.push(toast);
     this.toastSubject.next(this.toasts);
 
-    setTimeout(() => this.removeToast(id), duration);
+    setTimeout(() => this.removeToast(id), 100000);
   }
 
   removeToast(id: number) {

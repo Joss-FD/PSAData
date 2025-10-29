@@ -58,33 +58,35 @@ export class SearchViewComponent {
       this.loading = false;
     }
     else {
-      this.requestService.getInfoAndImages(certNumber)
-      .subscribe(({details, images}) => {
-        this.result = details.PSACert;
-        //Put the front image first
-        this.images = images.sort((a, b) => a.IsFrontImage === b.IsFrontImage ? 0 : a.IsFrontImage ? -1 : 1);
-        
-        if (!this.result) {
+      this.requestService.getInfoAndImages(certNumber).subscribe({
+        next: ({ details, images }) => {
+          this.result = details.PSACert;
+          // Put the front image first
+          this.images = images.sort((a, b) => a.IsFrontImage === b.IsFrontImage ? 0 : a.IsFrontImage ? -1 : 1);
+
+          if (!this.result) {
+            this.loading = false;
+            return;
+          }
+
+          this.getStringFromPayload(this.result, this.images);
+          this.cursedCache[certNumber!] = [this.result, this.images];
+
+          if (addToHistory) {
+            this.certHistory.unshift(new FakeLink(certNumber!, this.result.Subject));
+            this.certHistory = this.certHistory.slice(0, CERT_HISTORY_LENGTH - 1);
+            this.localStorageService.saveObjectData(SEARCH_HISTORY_KEY, this.certHistory);
+          }
+
           this.loading = false;
-          return;
+        },
+        error: (err) => {
+          this.loading = false;
+          console.trace(err);
+          const message = this.formatApiError(err);
+          this.toastService.showToast(`API request failed: ${message}`);
         }
-        
-        this.getStringFromPayload(this.result, this.images);
-        this.cursedCache[certNumber!] = [this.result, this.images];
-        
-        if(addToHistory)
-        {
-          this.certHistory.unshift(new FakeLink(certNumber!, this.result.Subject));
-          this.certHistory = this.certHistory.slice(0, CERT_HISTORY_LENGTH - 1);
-          this.localStorageService.saveObjectData(SEARCH_HISTORY_KEY, this.certHistory);
-        }
-        this.loading = false;
-      },
-      error => {
-        this.loading = false;
-        console.trace(error);
-        this.toastService.showError("API request failed: " + (error.error || error.status || "Unknown error"));
-      })
+      });
     }
   }
 
@@ -102,7 +104,8 @@ export class SearchViewComponent {
   }
 
   copyText(text: string) {
-    navigator.clipboard.writeText(text);
+    navigator.clipboard.writeText(text)
+       .then(() => this.toastService.showToast('Copied to clipboard', 'success'));
   }
 
   clearHistory() {
@@ -129,4 +132,31 @@ export class SearchViewComponent {
       // element.style.marginRight = `calc(-${element.offsetWidth}px - 0.5rem)`;
     } 
   }
+
+  private formatApiError(error: any): string {
+    if (!error) return 'Unknown error';
+
+    if (error.error) {
+      if (typeof error.error === 'string') {
+        return error.error;
+      }
+
+      if (typeof error.error === 'object') {
+        const possibleKeys = ['message', 'error', 'detail', 'description'];
+        for (const key of possibleKeys) {
+          if (error.error[key]) return error.error[key];
+        }
+        return JSON.stringify(error.error);
+      }
+    }
+
+    if (error.message) return error.message;
+
+    if (error.status) {
+      return `HTTP ${error.status}`;
+    }
+
+    return 'Unexpected error occurred';
+  }
+
 }

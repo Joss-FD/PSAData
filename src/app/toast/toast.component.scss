@@ -1,49 +1,46 @@
 .toast-container {
   position: fixed;
   bottom: 1rem;
-  left: 50%;
-  transform: translateX(-50%);
+  right: 1rem;
   display: flex;
   flex-direction: column;
+  align-items: flex-end; // ✅ prevent all toasts from stretching equally
   gap: 0.5rem;
   z-index: 9999;
 }
 
 .toast {
+  width: 280px; // ✅ fixed width for all toasts (adjust as needed)
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  color: white;
+  font-weight: 500;
+  backdrop-filter: blur(6px);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  min-width: 250px;
-  max-width: 400px;
-  padding: 0.75rem 1rem;
-  background-color: #ef4444; // red background (Tailwind red-500)
-  color: #ffffff;            // white text
-  border-radius: 0.5rem;     // rounded corners
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15); // subtle shadow
-  font-weight: 600;
-  overflow-wrap: break-word;  // wrap long words
-  word-break: break-word;     
-  pointer-events: auto;
-}
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  word-wrap: break-word;
+  text-align: left;
 
-.toast span {
-  flex: 1;
-}
+  &.error {
+    background-color: color-mix(in oklab, oklch(100% 0 0 / .15) 25%, red);
+  }
 
-.close-btn {
-  background: none;
-  border: none;
-  color: #ffffff;
-  font-size: 1rem;
-  font-weight: bold;
-  cursor: pointer;
-  margin-left: 0.5rem;
-  padding: 0;
-  line-height: 1;
-  transition: opacity 0.2s;
-}
+  &.success {
+    background-color: color-mix(in oklab, oklch(100% 0 0 / .15) 25%, green);
+  }
 
-.close-btn:hover {
-  opacity: 0.7;
+  .close {
+    background: none;
+    border: none;
+    color: inherit;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 0 0.25rem;
+    line-height: 1;
+    &:hover {
+      opacity: 0.8;
+    }
+  }
 }
-

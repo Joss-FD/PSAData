@@ -1,4 +1,4 @@
-export const CERT_HISTORY_LENGTH = 10;
+export const CERT_HISTORY_LENGTH = 7;
 
 export const DEFAULT_PSA_RESULT = `{
   "PSACert": {

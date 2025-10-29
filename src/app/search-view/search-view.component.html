@@ -32,11 +32,11 @@
 <app-spinner *ngIf="loading"></app-spinner>
 <div class="result-view">
     <!-- {{result | json}} -->
-    <h2 *ngIf="result">
+    <h3 *ngIf="result">
         PSA {{result.CardGrade}} {{result.Subject}} #{{result.CardNumber}} {{result.Variety}}
         - {{result.Year}}
 
-    </h2>
+    </h3>
 
     <div class="image-container">
         <img *ngFor="let img of images" [src]="img.ImageURL"

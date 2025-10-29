@@ -9,7 +9,7 @@ import { trigger, style, transition, animate } from '@angular/animations';
   animations: [
     trigger('slideInOut', [
       transition(':enter', [
-        style({ transform: 'translateY(100%)', opacity: 1 }), // keep text visible
+        style({ transform: 'translateY(100%)', opacity: 1 }),
         animate('400ms ease-out', style({ transform: 'translateY(0)' }))
       ]),
       transition(':leave', [

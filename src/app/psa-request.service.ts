@@ -22,7 +22,7 @@ export class PsaRequestService {
   getInfoAndImages(number: string) {
     return forkJoin({
       details: this.getInfoByCertNumber(number), 
-      images: this.getImagesByCertNumber(number).pipe(catchError(e=> of([])))
+      images: this.getImagesByCertNumber(number).pipe(catchError(e => of([])))
     })
   }
 

@@ -1,8 +1,11 @@
 <div class="toast-container">
-  <div *ngFor="let toast of toasts" class="toast">
-    <div class="toast-content" [@slideInOut]>
-      <span>{{ toast.message }}</span>
-      <button class="close-btn" (click)="closeToast(toast.id)">&#10005;</button>
-    </div>
+  <div
+    *ngFor="let toast of toasts"
+    class="toast"
+    [ngClass]="toast.type"
+    [@slideInOut]
+  >
+    <span>{{ toast.message }}</span>
+    <button class="close" (click)="closeToast(toast.id)">×</button>
   </div>
 </div>
