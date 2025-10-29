@@ -10,9 +10,7 @@
     margin-top: 1rem;
     display: flex;
     width: 100%;
-    // padding-left: 2rem;
     flex-grow: 1;
-    // justify-content: center;
     
     .search-input-container:first-child>* {
         height: 35px;
@@ -46,18 +44,18 @@
 .search-history-container {
     top: 10px;
     border: 1px solid #27272a;
-    border-radius: .25rem;
-    background-color: color-mix(in oklab, oklch(100% 0 0 / .15) 30%, transparent);
+    border-radius: .5rem;
+    background: hsl(240 5% 10% / 0.8);
+    backdrop-filter: blur(8px);
     min-width: 150px;
+    max-height: 85vh;
     display: flex;
     flex-direction: column;
-    position: absolute;
+    position: fixed;
     right: .5rem;
-    align-items: flex-end;
-    font-weight: bold;
-    padding: .5rem;
+    padding: 1rem;
     transition: margin-right .25s;
-    transition: transform .5s;
+    transition: transform .5s ease;
 
     #collapseIcon {
         cursor: pointer;
@@ -66,14 +64,11 @@
         position: absolute;
         left: -20px;
 
-        transition: rotate .4s;
+        transition: rotate .6s ease;
     }
     & a, &>span.search-history-title {
         width: 100%;
         justify-content: end;
-        // transition: width 0.6s;
-        // overflow: hidden;
-        // text-wrap: nowrap;
     }
 
     //When the menu is hidden
@@ -85,24 +80,22 @@
             display: block;
             rotate: 180deg;
         }
-        // & a {
-        //     // width: 0px;
-        //     // display: none;
-        // }
-        // &>span.search-history-title {
-        //     // width: 0px;
-        //     // display: none;
-        // }
     }
 
     &>span.search-history-title {
         display: flex;
-        text-decoration: underline;
         height: 20px;
         align-items: center;
         gap: .25rem;
+        margin-bottom: .5rem;
+        font-weight: bolder;
 
-        &>svg {
+        .clear-history-btn {
+            display: inline-flex;
+            align-items: center;
+        }
+
+        &>*>svg {
             cursor: pointer;
             height: 15px;
             width: 15px;
@@ -112,7 +105,6 @@
     & a {
         display: flex;
         cursor: pointer;
-        // text-decoration: underline;
         height: 20px;
         align-items: center;
         gap: .25rem;
@@ -132,7 +124,7 @@
     flex-direction: column;
     // align-items: center;
     border: 1px solid #27272a;
-    border-radius: 0.25rem;
+    border-radius: 0.5rem;
     padding: 1rem;
     // background-color: color-mix(in oklab, oklch(100% 0 0 / 0.15) 30%, transparent);
     // width: 100%;
@@ -146,7 +138,7 @@
         min-width: 0;
 
         border: 1px solid #27272a;
-        border-radius: .25rem;
+        border-radius: .5rem;
         background-color: color-mix(in oklab, oklch(100% 0 0 / .15) 30%, transparent);
         // width: 80%;
         padding: 2rem;
@@ -163,7 +155,7 @@
     flex-grow: 1;
     min-width: 0px;
     border: 1px solid #27272a;
-    border-radius: 0.25rem;
+    border-radius: 0.5rem;
     // background-color: color-mix(in oklab, oklch(100% 0 0 / 0.15) 30%, transparent);
     padding: 1rem;
     .copy-image-wrapper {
